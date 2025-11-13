@@ -55,7 +55,7 @@ function play() {
 
   //true이면 history에 내가 입력한 숫자가 있다,라는 의미(같은 숫자가 있는 경우)
   if (history.includes(userNum)) {
-    result.textContent = "이미 입력한 숫자입니다. 다른 숫자를 입력해주세요";
+    result.innerHTML = `<p>이미 입력한 숫자입니다.<br> 다른 숫자를 입력해주세요</p>`;
     user.value = "";
     return;
   }
