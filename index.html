@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0px;
+        padding: 0px;
+      }
+      body {
+        min-height: 100vh;
+        background-color: antiquewhite;
+      }
+      #container {
+        max-width: 720px;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: antiquewhite;
+        margin: 0px auto;
+        box-sizing: border-box;
+      }
+      .all {
+        padding: 30px 0px;
+        /* box-sizing: border-box; */
+        display: flex;
+        flex-direction: column; /* 요소들을 위아래로 배치 */
+        align-items: center; /* 가로(수평) 가운데 정렬 */
+        text-align: center; /* 텍스트도 가운데 정렬 */
+      }
+
+      .title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+      .clip {
+        width: 100px;
+        height: 100px;
+        overflow: hidden; /* 이미지가 영역 밖으로 안 나가게 */
+        clip-path: circle(50% at 50% 50%);
+      }
+
+      .clip img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .title h3 {
+        font-size: 43px;
+        font-weight: 700;
+        display: inline-block; /* 배경 애니메이션이 안정적으로 동작하게 */
+        background: linear-gradient(90deg, orangered, gold, deeppink);
+        background-size: 200% 200%; /* 중요: 그라데이션을 크게 해서 움직임이 보이게 함 */
+        background-repeat: no-repeat;
+        -webkit-background-clip: text; /* Chrome / Safari */
+        background-clip: text; /* 표준 선언 (브라우저 지원이 달라질 수 있음) */
+        -webkit-text-fill-color: transparent; /* 텍스트 컬러를 투명으로 해야 배경이 보임 (Chrome/Safari) */
+        color: transparent; /* 안전선 */
+        animation: gradientMove 3s linear infinite;
+        letter-spacing: 1px;
+      }
+
+      @keyframes gradientMove {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .sub {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 50px;
+        border: 5px dashed palevioletred;
+        border-radius: 10px;
+        padding: 15px;
+      }
+
+      .imgBox {
+        width: 50%;
+        /* margin: 80px 0px; */
+        border-radius: 15px;
+      }
+      .imgBox img {
+        width: 90%;
+        border-radius: 15px;
+      }
+      .box {
+        width: 50%;
+        font-size: 17px;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* ← 여기서 해결! */
+        text-align: center;
+      }
+      #user {
+        width: 250px;
+        padding: 10px;
+        text-align: center;
+      }
+      #chance {
+        width: 90%;
+        margin: 20px auto;
+        font-size: 25px;
+        text-align: center;
+      }
+      #result {
+        width: 90%;
+        font-size: 25px;
+      }
+      #play,
+      #reset {
+        margin-left: 10px;
+        padding: 10px;
+        border: none;
+        background-color: rgb(219, 148, 148);
+        margin-top: 15px;
+        border-radius: 5px;
+      }
+      #play:hover {
+        background-color: brown;
+        color: antiquewhite;
+      }
+      #reset:hover {
+        background-color: brown;
+        color: antiquewhite;
+      }
+
+      /* 반응 애니메이션 */
+      .imgBox img {
+        transition: transform 0.4s ease;
+      }
+
+      /* UP: 톡 위로 튀기 */
+      .upAnim {
+        animation: upPulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes upPulse {
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+        }
+        25% {
+          transform: translateY(-20px) scale(1.05);
+        }
+        50% {
+          transform: translateY(0) scale(1);
+        }
+        75% {
+          transform: translateY(-10px) scale(1.03);
+        }
+      }
+
+      /* DOWN: 아래로 꾹 눌리는 느낌 */
+      .downAnim {
+        animation: downPulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes downPulse {
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+        }
+        25% {
+          transform: translateY(20px) scale(0.95);
+        }
+        50% {
+          transform: translateY(0) scale(1);
+        }
+        75% {
+          transform: translateY(10px) scale(0.98);
+        }
+      }
+
+      /* BINGO: 축하 팡팡! */
+      .bingoAnim {
+        animation: bingoEffect 0.6s ease forwards;
+      }
+
+      @keyframes bingoEffect {
+        0% {
+          transform: translateY(0) scale(1) rotate(0deg);
+        }
+        10% {
+          transform: translateY(-15px) scale(1.1) rotate(5deg);
+        }
+        20% {
+          transform: translateY(-30px) scale(1.2) rotate(-5deg);
+        }
+        40% {
+          transform: translateY(-10px) scale(1.25) rotate(4deg);
+        }
+        60% {
+          transform: translateY(0) scale(1.15) rotate(-4deg);
+        }
+        80% {
+          transform: translateY(-8px) scale(1.2) rotate(3deg);
+        }
+        100% {
+          transform: translateY(0) scale(1) rotate(0deg);
+        }
+      }
+
+      /* 텍스트 팝업 */
+      #result.popup {
+        animation: popupText 0.6s ease;
+      }
+
+      @keyframes popupText {
+        0% {
+          transform: scale(1.5);
+          opacity: 0;
+        }
+        35% {
+          transform: scale(1) rotate(30deg);
+          opacity: 1;
+        }
+        70% {
+          transform: scale(1.5) rotate(0deg);
+          opacity: 1;
+        }
+
+        100% {
+          transform: scale(1) rotate(-30deg);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div class="all">
+        <div class="title">
+          <div class="clip">
+            <img src="img/up_and_down.jpg" alt="" />
+          </div>
+          <h3>
+            Number Hunt :<br />
+            5 Chances
+          </h3>
+        </div>
+        <div class="sub">
+          <div class="imgBox">
+            <img src="img/game1.png" alt="" />
+          </div>
+          <div class="box">
+            <div id="result">꼭꼭 숨은 숫자 찾기~!</div>
+            <div id="chance"></div>
+            <input
+              id="user"
+              placeholder="1부터 100까지의 수"
+              onkeypress="if(event.keyCode==13){play()}"
+            />
+            <!-- 만약 키를 눌렀을 때 13번키(엔터)와 같다면 play함수를 호출하시오 -->
+            <div class="btn">
+              <button id="play">시작</button>
+              <button id="reset">재시작</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="custom.js"></script>
+  </body>
+</html>
